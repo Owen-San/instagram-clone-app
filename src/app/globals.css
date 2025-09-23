@@ -177,7 +177,7 @@
 
 @layer components {
   .navLink {
-    @apply inline-flex items-center gap-2 w-full !px-3 md:!my-1.5
+    @apply inline-flex items-center gap-2 w-auto md:w-full !px-3 md:!my-1.5
            !justify-center lg:!justify-start;
   }
 
