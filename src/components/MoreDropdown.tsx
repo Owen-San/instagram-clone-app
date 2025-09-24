@@ -97,7 +97,12 @@ function MoreDropdown() {
               <p>Switch appearance</p>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="menuItem" onClick={() => signOut()}>
+            <DropdownMenuItem
+              className="menuItem"
+              onClick={async () => {
+                await signOut({ callbackUrl: "/login", redirect: true });
+              }}
+            >
               <LogOut size={20} />
               <p>Log out</p>
             </DropdownMenuItem>

@@ -1,9 +1,17 @@
-import React from 'react'
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { config } from "../../../auth";
 
-function DashBoardPage() {
+export default async function DashBoardPage() {
+  const session = await getServerSession(config);
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
-    <div>DashBoardPage</div>
-  )
+    <main>
+      DashBoardPage
+      {/* dashboard UI goes here */}
+    </main>
+  );
 }
-
-export default DashBoardPage

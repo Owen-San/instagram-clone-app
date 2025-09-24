@@ -1,7 +1,9 @@
+import { getServerSession } from "next-auth";
+import { config } from "../../auth";
 import { redirect } from "next/navigation";
 
-async function Page() {
-  redirect("/dashboard");
+export default async function Page() {
+  const session = await getServerSession(config);
+  if (session) redirect("/dashboard");
+  redirect("/login");
 }
-
-export default Page;

@@ -1,20 +1,21 @@
 import { withAuth } from "next-auth/middleware";
 
+const publicPaths = ["/login", "/signup", "/forgot-password"];
+
 export default withAuth({
+  pages: { signIn: "/login" },
   callbacks: {
-    authorized({ req, token }) {
-      const isLoggedIn = !!token;
-      const isOnDashboard = req.nextUrl.pathname.startsWith("/dashboard");
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      }
-      return true;
+    authorized: ({ req, token }) => {
+      const { pathname } = req.nextUrl;
+      const isPublic = publicPaths.includes(pathname);
+      if (isPublic) return true;
+      return !!token;
     },
   },
 });
 
 export const config = {
-  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  matcher: ["/((?!api|_next/static|_next/image|.png).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|_next/webpack-hmr|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:png|jpg|jpeg|svg|gif|webp|ico|css|js)).*)",
+  ],
 };
