@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { config } from "../../auth";
 import { redirect } from "next/navigation";
 
