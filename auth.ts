@@ -1,4 +1,6 @@
-import NextAuth, { getServerSession, type NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
+import { getServerSession } from "next-auth/next";
+import type { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import GoogleProvider from "next-auth/providers/google";
@@ -69,7 +71,6 @@ export const config = {
 
 export default NextAuth(config);
 
-// Use it in server contexts
 export function auth(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]

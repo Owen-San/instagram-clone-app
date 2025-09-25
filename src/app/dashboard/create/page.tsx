@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 // import { createPost } from "@/lib/actions";
 // import { CreatePost } from "@/lib/schemas";
-// import { UploadButton } from "@/lib/uploadthing";
+import { UploadButton } from "@/lib/uploadthing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -34,6 +34,7 @@ import React from "react";
 import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
 import useMount from "hooks/useMount";
 import { CreatePost } from "@/lib/schemas";
+import Error from "@/components/Error";
 
 function CreatePage() {
   const pathname = usePathname();
@@ -41,13 +42,12 @@ function CreatePage() {
   const router = useRouter();
   const mount = useMount();
   const form = useForm<z.input<typeof CreatePost>>({
-  resolver: zodResolver(CreatePost),
-  defaultValues: {
-    caption: "",
-    fileUrl: "",
-  },
-});
-
+    resolver: zodResolver(CreatePost),
+    defaultValues: {
+      caption: "",
+      fileUrl: "",
+    },
+  });
 
   const fileUrl = form.watch("fileUrl");
 
@@ -66,10 +66,13 @@ function CreatePage() {
 
           <Form {...form}>
             <form
-              className="space-y-4"
               onSubmit={form.handleSubmit(async (values) => {
-                console.log(values);
+                const res = await createPost(values);
+                if (res) {
+                  return toast.error(<Error res={res} />);
+                }
               })}
+              className="space-y-4"
             >
               {!!fileUrl ? (
                 <div className="h-96 md:h-[450px] overflow-hidden rounded-md">
@@ -90,17 +93,33 @@ function CreatePage() {
                     <FormItem>
                       <FormLabel htmlFor="picture">Picture</FormLabel>
                       <FormControl>
-                        {/* <UploadButton
+                        <UploadButton
                           endpoint="imageUploader"
                           onClientUploadComplete={(res) => {
-                            form.setValue("fileUrl", res[0].url);
-                            toast.success("Upload complete");
+                            type FileLike =
+                              | { ufsUrl?: string }
+                              | { url?: string };
+
+                            const file = (res?.[0] ?? undefined) as
+                              | FileLike
+                              | undefined;
+                            const fileUrl =
+                              (file as { ufsUrl?: string })?.ufsUrl ??
+                              (file as { url?: string })?.url ??
+                              "";
+
+                            if (fileUrl) {
+                              form.setValue("fileUrl", fileUrl);
+                              toast.success("Upload complete");
+                            } else {
+                              toast.error("No file URL returned");
+                            }
                           }}
                           onUploadError={(error: Error) => {
                             console.error(error);
                             toast.error("Upload failed");
                           }}
-                        /> */}
+                        />
                       </FormControl>
                       <FormDescription>
                         Upload a picture to post.
