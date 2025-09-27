@@ -35,6 +35,7 @@ import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-ser
 import useMount from "hooks/useMount";
 import { CreatePost } from "@/lib/schemas";
 import Error from "@/components/Error";
+import { createPost } from "@/lib/actions";
 
 function CreatePage() {
   const pathname = usePathname();

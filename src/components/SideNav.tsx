@@ -1,12 +1,14 @@
-import { auth } from "../../auth";
 import Logo from "./Logo";
 import MoreDropdown from "./MoreDropdown";
 import NavLinks from "./NavLinks";
 import ProfileLink from "./ProfileLink";
+import type { User } from "next-auth";
 
-async function SideNav() {
-    const session = await auth();
-    const user = session?.user;
+type Props = {
+  user?: (User & { id: string; username?: string | null }) | null;
+};
+
+export default function SideNav({ user = null }: Props) {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <div
@@ -19,19 +21,13 @@ async function SideNav() {
         </div>
 
         <NavLinks />
-        {user && <ProfileLink
-        user={user}
-        />}
 
-        <div
-          className="hidden md:flex relative md:mt-auto flex-1
-        items-end w-full"
-        >
+        {user && <ProfileLink user={user} />}
+
+        <div className="hidden md:flex relative md:mt-auto flex-1 items-end w-full">
           <MoreDropdown />
         </div>
       </div>
     </div>
   );
 }
-
-export default SideNav;

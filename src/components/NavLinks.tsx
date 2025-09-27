@@ -16,34 +16,12 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { name: "Home", href: "/dashboard", icon: Home },
-  {
-    name: "Search",
-    href: "/dashboard/search",
-    icon: Search,
-    hideOnMobile: true,
-  },
+  { name: "Search", href: "/dashboard/search", icon: Search, hideOnMobile: true },
   { name: "Explore", href: "/dashboard/explore", icon: Compass },
-  {
-    name: "Reels",
-    href: "/dashboard/reels",
-    icon: Clapperboard,
-  },
-  {
-    name: "Messages",
-    href: "/dashboard/messages",
-    icon: MessageCircle,
-  },
-  {
-    name: "Notifications",
-    href: "/dashboard/notifications",
-    icon: Heart,
-    hideOnMobile: true,
-  },
-  {
-    name: "Create",
-    href: "/dashboard/create",
-    icon: PlusSquare,
-  },
+  { name: "Reels", href: "/dashboard/reels", icon: Clapperboard },
+  { name: "Messages", href: "/dashboard/messages", icon: MessageCircle },
+  { name: "Notifications", href: "/dashboard/notifications", icon: Heart, hideOnMobile: true },
+  { name: "Create", href: "/dashboard/create", icon: PlusSquare },
 ];
 
 function NavLinks() {
@@ -61,7 +39,8 @@ function NavLinks() {
             href={link.href}
             className={buttonVariants({
               variant: isActive ? "secondary" : "ghost",
-              className: cn("navLink", { "hidden md:flex": link.hideOnMobile }),
+              // important modifiers ensure hidden wins over inline-flex from the button styles
+              className: cn("navLink", { "!hidden md:!flex": link.hideOnMobile }),
               size: "lg",
             })}
           >

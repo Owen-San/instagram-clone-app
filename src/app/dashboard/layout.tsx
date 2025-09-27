@@ -1,5 +1,6 @@
-import SideNav from "@/components/SideNav";
 import type { Metadata } from "next";
+import Header from "@/components/Header";
+import SideNav from "@/components/SideNav";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -8,17 +9,23 @@ export const metadata: Metadata = {
 
 export default function DashboardLayout({
   children,
-}: Readonly<{
+  modal,
+}: {
   children: React.ReactNode;
-}>) {
+  modal: React.ReactNode;
+}) {
   return (
     <div className="flex h-screen relative flex-col md:flex-row md:overflow-hidden bg-background text-foreground">
       <div className="w-20 flex-none lg:w-64 md:border-r border-border">
         <SideNav />
       </div>
+
       <div className="flex-grow mt-12 md:mt-0 flex-1 w-full md:overflow-y-auto sm:p-6 md:p-12 max-w-7xl mx-auto">
+        <Header />
         {children}
       </div>
+
+      {modal}
     </div>
   );
 }
