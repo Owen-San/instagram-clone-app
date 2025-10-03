@@ -5,6 +5,7 @@ import {
   DialogClose,
   DialogContent,
   DialogTrigger,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import SubmitButton from "@/components/SubmitButton";
 import { Comment } from "@prisma/client";
@@ -20,9 +21,18 @@ function CommentOptions({ comment }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <MoreHorizontal className="h-5 w-5 hidden group-hover:inline cursor-pointer dark:text-neutral-400" />
+        <button
+          type="button"
+          aria-label="Open comment options"
+          className="hidden group-hover:inline cursor-pointer dark:text-neutral-400"
+        >
+          <MoreHorizontal className="h-5 w-5" />
+        </button>
       </DialogTrigger>
+
       <DialogContent className="dialogContent">
+        <DialogTitle className="sr-only">Comment options</DialogTitle>
+
         <form
           action={async (formData) => {
             const { message } = await deleteComment(formData);

@@ -18,22 +18,24 @@ function PostsGrid({ posts }: { posts: PostWithExtras[] | undefined }) {
         <Link
           href={`/dashboard/p/${post.id}`}
           key={post.id}
-          className="relative flex items-center justify-center h-44 md:h-64 lg:h-80 group col-span-1"
+          className="relative flex items-center justify-center h-44 md:h-64 lg:h-80 group col-span-1 overflow-hidden"
         >
           <Image
             src={post.fileUrl}
             fill
             alt="Post preview"
-            className="object-cover -z-10 transition group-hover:filter group-hover:blur-[2px] group-hover:brightness-90"
+            sizes="(min-width:1024px) 33vw, (min-width:768px) 33vw, 33vw"
+            className="object-cover z-0 transition group-hover:brightness-90 group-hover:blur-[2px]"
+            priority={false}
           />
-          <div className="opacity-0 group-hover:opacity-100 flex transition items-center justify-center space-x-6">
+
+          <div className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 flex items-center justify-center space-x-6 transition bg-black/0 group-hover:bg-black/20">
             {post.likes.length > 0 && (
               <div className="flex items-center font-bold space-x-1">
                 <HeartIcon className="text-white fill-white" />
                 <p className="text-white">{post.likes.length}</p>
               </div>
             )}
-
             {post.comments.length > 0 && (
               <div className="flex items-center font-bold space-x-1">
                 <MessageCircle className="text-white fill-white" />

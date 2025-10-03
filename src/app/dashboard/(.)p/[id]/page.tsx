@@ -15,7 +15,7 @@ async function PostModal({ params: { id } }: Props) {
     notFound();
   }
 
-  return <PostView id={id} post={post} asModal />;
+  return <PostView id={id} post={post} />;
 }
 
 export default PostModal;

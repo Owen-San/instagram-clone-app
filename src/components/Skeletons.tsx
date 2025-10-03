@@ -38,7 +38,7 @@ export function PostsSkeleton() {
 export function EditPostSkeleton() {
   return (
     <Dialog open>
-      <DialogContent>
+      <DialogContent className="p-0 gap-0">
         <DialogHeader>
           <DialogTitle>Edit info</DialogTitle>
         </DialogHeader>
@@ -56,31 +56,41 @@ export function EditPostSkeleton() {
 export function ViewPostSkeleton() {
   return (
     <Dialog open>
-      <DialogContent className="flex gap-0 flex-col md:flex-row items-start p-0 md:max-w-3xl lg:max-w-5xl xl:max-w-6xl h-full max-h-[500px] lg:max-h-[700px] xl:max-h-[800px]">
-        <DialogHeader className="sr-only">
-          <DialogTitle>Loading post…</DialogTitle>
+      <DialogContent
+        className="
+          p-0 gap-0
+          flex flex-col
+          w-full sm:max-w-md md:max-w-lg
+          overflow-hidden bg-background
+        "
+      >
+        <DialogHeader className="flex flex-row items-center gap-2 px-3 py-2 border-b text-left">
+          <DialogTitle className="sr-only">Loading post…</DialogTitle>
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-4 w-28" />
         </DialogHeader>
 
-        <Skeleton className="relative overflow-hidden h-96 md:h-[500px] lg:h-[700px] xl:h-[800px] max-w-3xl w-full rounded-r-none" />
+        <div className="relative w-full h-[320px] sm:h-[360px] md:h-[420px]">
+          <Skeleton className="absolute inset-0" />
+        </div>
 
-        <div className="flex flex-col h-full py-4 pl-3.5 pr-6 flex-1">
-          <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
+        <div className="px-3 py-2 border-t">
+          <div className="flex items-center gap-4">
+            <Skeleton className="h-6 w-6 rounded-md" />
+            <Skeleton className="h-6 w-6 rounded-md" />
+            <Skeleton className="h-6 w-6 rounded-md" />
+            <div className="ml-auto">
+              <Skeleton className="h-6 w-6 rounded-md" />
             </div>
           </div>
+        </div>
 
-          <Skeleton className="flex-1 my-4" />
+        <div className="border-t px-3 py-2">
+          <Skeleton className="h-9 w-full" />
+        </div>
 
-          <div className="flex items-center w-full space-x-4">
-            <div className="space-y-2 w-full">
-              <Skeleton className="h-4 w-full flex-1" />
-              <Skeleton className="h-4 w-[300px]" />
-              <Skeleton className="h-4 w-[300px]" />
-            </div>
-          </div>
+        <div className="px-3 py-2 border-t">
+          <Skeleton className="h-4 w-24" />
         </div>
       </DialogContent>
     </Dialog>

@@ -1,13 +1,13 @@
-import { auth } from "auth";
 import UserAvatar from "@/components/UserAvatar";
+import { PostWithExtras } from "@/lib/definitions";
 import Image from "next/image";
 import Link from "next/link";
+import Comments from "./Comments";
+import Timestamp from "./Timestamp";
 import { Card } from "./ui/card";
 import PostOptions from "./PostOptions";
 import PostActions from "./PostActions";
-import Timestamp from "./Timestamp";
-import Comments from "./Comments";
-import { PostWithExtras } from "@/lib/definitions";
+import { auth } from "auth";
 
 async function Post({ post }: { post: PostWithExtras }) {
   const session = await auth();
@@ -20,21 +20,19 @@ async function Post({ post }: { post: PostWithExtras }) {
     <div className="flex flex-col space-y-2.5">
       <div className="flex items-center justify-between px-3 sm:px-0">
         <div className="flex space-x-3 items-center">
-          <UserAvatar user={post.user} />
+          <Link href={`/dashboard/${username}`}>
+            <UserAvatar user={post.user} />
+          </Link>
           <div className="text-sm">
             <p className="space-x-1">
               <span className="font-semibold">{username}</span>
-              <span
-                className="font-medium text-neutral-500 dark:text-neutral-400
-                      text-xs
-                    "
-              >
+              <span className="font-medium text-neutral-500 dark:text-neutral-400 text-xs">
                 •
               </span>
               <Timestamp createdAt={post.createdAt} />
             </p>
             <p className="text-xs text-black dark:text-white font-medium">
-              New Jersey, United States
+              New Jersey, United States{" "}
             </p>
           </div>
         </div>

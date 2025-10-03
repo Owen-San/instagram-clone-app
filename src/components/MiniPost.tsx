@@ -10,13 +10,16 @@ import Timestamp from "./Timestamp";
 function MiniPost({ post }: { post: PostWithExtras }) {
   const username = post.user.username;
   const href = `/dashboard/${username}`;
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user = session?.user;
 
-  if (!user) return null;
+  const caption =
+    typeof post.caption === "string" ? post.caption.trim() : "";
+
+  if (!user || !caption) return null;
 
   return (
-    <div className="group p-3 px-3.5  flex items-start space-x-2.5">
+    <div className="group p-3 px-3.5 flex items-start space-x-2.5">
       <Link href={href}>
         <UserAvatar user={post.user} />
       </Link>
@@ -25,7 +28,7 @@ function MiniPost({ post }: { post: PostWithExtras }) {
           <Link href={href} className="font-semibold">
             {username}
           </Link>
-          <p className="font-medium">{post.caption}</p>
+          <p className="font-medium">{caption}</p>
         </div>
         <div className="flex h-5 items-center space-x-2.5">
           <Timestamp createdAt={post.createdAt} />
