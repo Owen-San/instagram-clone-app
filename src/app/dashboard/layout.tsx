@@ -12,7 +12,7 @@ export default async function DashboardLayout({
   modal,
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
+  modal?: React.ReactNode;
 }) {
   return (
     <div className="flex relative flex-col md:flex-row bg-background text-foreground">
@@ -22,11 +22,10 @@ export default async function DashboardLayout({
 
       <div className="page-scroller h-screen flex-1 w-full sm:p-6 md:p-12 max-w-7xl mx-auto">
         <Header />
-        <div className="h-12 md:hidden" />
         {children}
       </div>
 
-      {modal}
+      {modal ?? null}
     </div>
   );
 }
