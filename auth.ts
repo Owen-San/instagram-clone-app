@@ -27,43 +27,38 @@ export const config = {
   callbacks: {
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.image = token.picture;
-        session.user.username = token.username;
+        session.user.id = token.id as string;
+        session.user.name = token.name ?? null;
+        session.user.email = token.email ?? null;
+        session.user.image = token.picture ?? null;
+        session.user.username = token.username ?? null;
       }
-
       return session;
     },
     async jwt({ token, user }) {
       const prismaUser = await prisma.user.findFirst({
-        where: {
-          email: token.email,
-        },
+        where: { email: token.email ?? undefined },
       });
 
       if (!prismaUser) {
-        token.id = user.id;
+        if (user?.id) token.id = user.id as string;
         return token;
       }
+
       if (!prismaUser.username) {
         await prisma.user.update({
-          where: {
-            id: prismaUser.id,
-          },
-          data: {
-            username: prismaUser.name?.split(" ").join("").toLowerCase(),
-          },
+          where: { id: prismaUser.id },
+          data: { username: prismaUser.name?.split(" ").join("").toLowerCase() },
         });
       }
 
       return {
+        ...token,
         id: prismaUser.id,
-        name: prismaUser.name,
-        email: prismaUser.email,
-        username: prismaUser.username,
-        picutre: prismaUser.image,
+        name: prismaUser.name ?? token.name ?? null,
+        email: prismaUser.email ?? token.email ?? null,
+        username: prismaUser.username ?? null,
+        picture: prismaUser.image ?? token.picture ?? null,
       };
     },
   },
