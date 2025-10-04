@@ -12,19 +12,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: { username: string };
+  params: Promise<{ username: string }>;
   children: React.ReactNode;
 };
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  _parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const profile = await fetchProfile(params.username);
+  const { username } = await params;
+  const profile = await fetchProfile(username);
   return { title: `${profile?.name} (@${profile?.username})` };
 }
 
-async function ProfileLayout({ children, params: { username } }: Props) {
+export default async function ProfileLayout({ children, params }: Props) {
+  const { username } = await params;
+
   const profile = await fetchProfile(username);
   const session = await auth();
   const isCurrentUser = session?.user.id === profile?.id;
@@ -119,5 +122,3 @@ async function ProfileLayout({ children, params: { username } }: Props) {
     </>
   );
 }
-
-export default ProfileLayout;
