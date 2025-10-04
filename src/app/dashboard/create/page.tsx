@@ -95,12 +95,17 @@ function CreatePage() {
                       <FormLabel htmlFor="picture">Picture</FormLabel>
                       <FormControl>
                         <UploadButton
+                          appearance={{
+                            button:
+                              "bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-11 px-5 w-full",
+                            container: "w-full",
+                            allowedContent: "hidden",
+                          }}
                           endpoint="imageUploader"
                           onClientUploadComplete={(res) => {
                             type FileLike =
                               | { ufsUrl?: string }
                               | { url?: string };
-
                             const file = (res?.[0] ?? undefined) as
                               | FileLike
                               | undefined;
