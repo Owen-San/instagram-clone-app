@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import SideNav from "@/components/SideNav";
-import type { User as NextAuthUser } from "next-auth";
-import { auth } from "auth";
-
-type AppUser = NextAuthUser & { id: string; username?: string | null };
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,17 +14,15 @@ export default async function DashboardLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-  const session = await auth();
-  const user: AppUser | null = (session?.user as AppUser) ?? null;
-
   return (
-    <div className="flex h-screen relative flex-col md:flex-row md:overflow-hidden bg-background text-foreground">
+    <div className="flex relative flex-col md:flex-row bg-background text-foreground">
       <div className="w-20 flex-none lg:w-64 md:border-r border-border">
-        <SideNav user={user} />
+        <SideNav />
       </div>
 
-      <div className="flex-grow mt-12 md:mt-0 flex-1 w-full md:overflow-y-auto sm:p-6 md:p-12 max-w-7xl mx-auto">
+      <div className="page-scroller h-screen flex-1 w-full sm:p-6 md:p-12 max-w-7xl mx-auto">
         <Header />
+        <div className="h-12 md:hidden" />
         {children}
       </div>
 

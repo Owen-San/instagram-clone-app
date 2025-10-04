@@ -167,6 +167,8 @@
 
   body {
     @apply min-h-screen bg-background text-foreground font-sans antialiased;
+    margin: 0;
+    padding-right: 0;
   }
 
   ::selection {
@@ -175,22 +177,35 @@
   }
 }
 
+.page-scroller {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.556 0 0 / 0.5) transparent;
+}
+.page-scroller::-webkit-scrollbar {
+  width: 8px;
+}
+.page-scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+.page-scroller::-webkit-scrollbar-thumb {
+  background-color: oklch(0.556 0 0 / 0.5);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
 @layer components {
   .navLink {
-    @apply inline-flex items-center gap-2 w-auto md:w-full !px-3 md:!my-1.5
-           !justify-center lg:!justify-start;
+    @apply inline-flex items-center gap-2 w-auto md:w-full !px-3 md:!my-1.5 !justify-center lg:!justify-start;
   }
-
   .menuItem {
     @apply dark:hover:bg-[#3C3C3C] !cursor-pointer flex items-center gap-x-2 !px-4 !py-3.5 !m-1.5 !rounded-lg font-medium;
   }
-
   .postOption {
     @apply flex items-center justify-center border-b border-border text-sm font-medium w-full;
   }
-
   .dialogContent {
     @apply bg-card !p-0 overflow-hidden !gap-0;
   }
 }
-

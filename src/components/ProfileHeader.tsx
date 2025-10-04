@@ -3,8 +3,8 @@ import { Button } from "./ui/button";
 
 function ProfileHeader({ username }: { username: string | null }) {
   return (
-    <header className="fixed md:hidden bg-white top-0 flex items-center dark:bg-neutral-950 w-full z-50 border-b border-zinc-300 dark:border-neutral-700 px-3 py-1 sm:-ml-6">
-      <Button size={"icon"} variant={"ghost"}>
+    <header className="fixed md:hidden top-0 z-50 w-full h-12 bg-white dark:bg-neutral-950 flex items-center px-3 sm:-ml-6">
+      <Button size="icon" variant="ghost">
         <Settings />
       </Button>
 
@@ -13,7 +13,7 @@ function ProfileHeader({ username }: { username: string | null }) {
         <ChevronDown />
       </div>
 
-      <Button size={"icon"} variant={"ghost"}>
+      <Button size="icon" variant="ghost">
         <UserPlus />
       </Button>
     </header>

@@ -33,14 +33,16 @@ function PostView({ id, post }: { id: string; post: PostWithExtras }) {
     <Dialog open={isPostModal} onOpenChange={(open) => !open && router.back()}>
       <DialogContent className="flex gap-0 flex-col md:flex-row items-start p-0 md:max-w-3xl lg:max-w-5xl xl:max-w-6xl h-full max-h-[500px] lg:max-h-[700px] xl:max-h-[800px] rounded-2xl overflow-hidden border bg-background shadow-2xl">
         <div className="flex flex-col justify-between md:h-full md:order-2 w-full max-w-md min-h-0">
-          <DialogHeader className="flex border-b space-y-0 space-x-2.5 flex-row items-center py-4 pl-3.5 pr-6">
+          <DialogHeader className="flex border-b space-y-0 space-x-2.5 flex-row items-center py-3 md:py-4 pl-3.5 pr-6">
             <DialogTitle className="sr-only">Post by {username}</DialogTitle>
-            <Link href={href}>
-              <UserAvatar user={post.user} />
-            </Link>
-            <Link href={href} className="font-semibold text-sm">
-              {username}
-            </Link>
+            <div className="flex items-center gap-2 pb-3 md:pb-0">
+              <Link href={href}>
+                <UserAvatar user={post.user} />
+              </Link>
+              <Link href={href} className="font-semibold text-sm">
+                {username}
+              </Link>
+            </div>
           </DialogHeader>
 
           <ScrollArea className="hidden md:inline border-b flex-1 min-h-0 py-1.5">
